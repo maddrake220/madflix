@@ -23,7 +23,6 @@ export default class extends React.Component {
             const {
                 data: {results: popular}
             } = await moviesApi.popular();
-            
             this.setState({
                 nowPlaying,
                 upcoming,
@@ -42,7 +41,6 @@ export default class extends React.Component {
 
     render() {
         const {nowPlaying, upcoming, popular, error, loading} = this.state;
-        console.log(this.state)
         return (<HomePresenter 
             nowPlaying={nowPlaying} 
             upcoming={upcoming} 

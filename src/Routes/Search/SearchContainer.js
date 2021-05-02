@@ -8,7 +8,8 @@ export default class extends React.Component {
         tvResults: null,
         searchTerm: "",
         error: null,
-        loading: false
+        loading: false,
+        pastTerm: null
     }
     handleSubmit = (event) => {
         event.preventDefault();
@@ -30,7 +31,7 @@ export default class extends React.Component {
                 results:movieResults}} = await moviesApi.search(searchTerm)
             const {data: {
                 results:tvResults}} = await tvApi.search(searchTerm)
-            this.setState({movieResults, tvResults, loading : true});
+            this.setState({pastTerm: searchTerm, movieResults, tvResults, loading : true});
         } catch {
             this.setState({ error : "Can't find results"})
         } finally {
@@ -38,11 +39,12 @@ export default class extends React.Component {
         }
     }
     render() {
-        const {movieResults,tvResults,searchTerm, error, loading} = this.state;
+        const {movieResults,tvResults,searchTerm, error, loading, pastTerm} = this.state;
         return (<SearchPresenter 
             movieResults={movieResults} 
             tvResults={tvResults} 
             searchTerm={searchTerm}
+            pastTerm={pastTerm}
             error={error}
             loading={loading}
             handleSubmit={this.handleSubmit}
