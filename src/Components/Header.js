@@ -57,5 +57,5 @@ export default withRouter(({ location: { pathname }}) =>(
         </Item>
     </List>
 </Header>))
-/* withRouter : 다른 컴포는를 감싸는 컴포넌트, props사용 가능*/
+/* withRouter : 다른 컴포넌트를 감싸는 컴포넌트, props사용 가능*/
 // export default withRouter(Header) 와 같은 의미
