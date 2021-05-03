@@ -55,12 +55,12 @@ const Poster = ({id, imageUrl, title, rating, year, isMovie = false}) =>
             <Image bgUrl={
                 imageUrl  
             ? `https://image.tmdb.org/t/p/w500${imageUrl}` 
-            : require("../Assets/NoPosterSmall.png")}/>
+            : require("../Assets/NoPosterSmall.png").default}/>
             <Rating>
                 <span role="img" aria-label="rating">
                     ⭐ 
                 </span>{" "}
-            {rating}/10
+            {Math.floor((rating/2)* 10) /10}/5
             </Rating>
         </ImageContainer>
         <Title>{title.length > 18 ? `${title.substring(0, 18)}...` : title}</Title>

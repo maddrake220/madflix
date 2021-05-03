@@ -6,9 +6,10 @@ import Section from "../../Components/Section";
 import Loader from "../../Components/Loader";
 import Message from "../../Components/Message";
 import Poster from "../../Components/Poster";
+import { Helmet } from "react-helmet";
 
 const Container = styled.div`
-    padding: 0px 10px;
+    padding: 20px;
 `;
 const TVPresenter = ({
     topRated,
@@ -16,7 +17,11 @@ const TVPresenter = ({
     popular,
     error,
     loading
-}) => loading ? <Loader/> : 
+}) => (<> 
+        <Helmet>
+            <title> TV Shows | Madflix</title>
+        </Helmet>
+        {loading ? <Loader/> : 
     <Container>
         {topRated && topRated.length > 0 && (
         <Section title= "Top Rated Shows">
@@ -55,7 +60,8 @@ const TVPresenter = ({
         </Section>
         )}
         {error && <Message color="#e74c3c" text={error} />}
-    </Container>;
+    </Container>}
+        </> )
 
 TVPresenter.propTypes = {
     topRated:propTypes.array,
