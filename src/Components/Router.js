@@ -4,8 +4,7 @@ import Home from "../Routes/Home";
 import Search from "../Routes/Search/index";
 import Tv from "../Routes/Tv/index";
 import Header from "./Header";
-import Detail from "../Routes/Detail/index" 
-
+import Detail from "../Routes/Detail/index";
 /* Arrow Function 에서 Return을 사용하지 않을 경우 () 를 사용!!! */
 export default () => (
    <Router>

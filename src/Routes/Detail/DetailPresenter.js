@@ -8,12 +8,23 @@ import { withBaseIcon } from 'react-icons-kit'
 import { starFull } from "react-icons-kit/icomoon/starFull";
 import { starHalf } from "react-icons-kit/icomoon/starHalf";
 import { starEmpty } from "react-icons-kit/icomoon/starEmpty";
+import { film } from "react-icons-kit/icomoon/film";
 import { Helmet } from "react-helmet";
 import Message from "../../Components/Message";
+import YouTube from 'react-youtube';
 
 
-const SideIconContainer = 
-    withBaseIcon({ size: 12, style: {color: 'yellow'}})
+const StarIconContainer = 
+    withBaseIcon({ size: 12, style: {color: 'yellow'}}
+)
+
+const LinkIconContainer = 
+    withBaseIcon({ size: 12, style: {color: 'Red'}}
+)
+
+const CantLinkIconContainer = 
+    withBaseIcon({ size: 12, style: {color: 'Grey'}}
+)
 
 const Container = styled.div`
   height: calc(100vh - 50px);
@@ -68,6 +79,10 @@ const Item = styled.span`
 
 `;
 
+const Video = styled.div`
+    margin-top: 20px;
+    margin-bottom: 20px;
+`;
 const ItemContainer = styled.div`
 margin:20px 0;
 `;
@@ -84,8 +99,17 @@ const Overview = styled.p`
     width:50%;
 `;
 
-const DetailPresenter = ({ result, loading, error }) =>
-  loading ? (
+function DetailPresenter  ({ result, loading, error }) {
+    const opts = {
+        height: '390',
+        width: '640',
+        playerVars: {
+          autoplay: 0,
+        },
+      };
+  return (
+      
+    loading ? (
       <>
       <Helmet>
           <title>Loading | Madflix</title>
@@ -119,14 +143,14 @@ const DetailPresenter = ({ result, loading, error }) =>
             <ItemContainer>
                 <Item>
                     {result.release_date 
-                    ? result.release_date.substring(0,4) 
-                    : result.first_air_date.substring(0,4) }
+                    ? result.release_date && result.release_date.substring(0,4)
+                    : result.first_air_date && result.first_air_date.substring(0,4) }
                 </Item>
                 <Divider>.</Divider>
                 <Item>
                     {result.runtime 
                     ? result.runtime
-                    : result.episode_run_time[0] } Min 
+                    : result.episode_run_time && result.episode_run_time[0] } Min 
                 </Item>
                 <Divider>.</Divider>
                 <Item>
@@ -137,22 +161,31 @@ const DetailPresenter = ({ result, loading, error }) =>
                 </Item>
                 <Divider>.</Divider>
                 <Item>
+                     {result.imdb_id 
+                        ? <a href={`https://www.imdb.com/title/${result.imdb_id}`}><LinkIconContainer icon={film}/></a> 
+                        : <CantLinkIconContainer icon={film}/>  }
+                </Item>
+                <Divider>.</Divider>
+                <Item>
                     {[...Array(parseInt(Math.floor((result.vote_average/2)* 10) /10))].map((n, index) => {
-                    return (<SideIconContainer icon={starFull}/>)
+                    return (<StarIconContainer icon={starFull}/>)
                 })}{[...Array(result.vote_average%2 >= 0.5 ? 1 : 0)].map((n, index) => {
-                    return (<SideIconContainer icon={starHalf}/>)
+                    return (<StarIconContainer icon={starHalf}/>)
                 })}{[...Array(result.vote_average%2 >= 0.5 ? 4-parseInt(Math.floor((result.vote_average/2)* 10) /10) 
                     : 5-parseInt(Math.floor((result.vote_average/2)* 10) /10) )].map((n, index) => {
-                    return (<SideIconContainer icon={starEmpty}/>)
+                    return (<StarIconContainer icon={starEmpty}/>)
                 })}
                 {Math.floor((result.vote_average/2)* 10) /10}/5
                 </Item>
+                <Video>
+                <YouTube videoId={result.videos.results[0].key} opts={opts}/>
+                </Video>
             </ItemContainer>
             <Overview>{result.overview}</Overview>
         </Data>
       </Content>
     </Container>)
-  );
+  ))};
 
   
 

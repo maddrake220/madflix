@@ -10,11 +10,26 @@ Learning React, ES6, TypeScript, Css by building a Moive Discovery App
  
 ## API Verbs
 
-- Now Playing (Movie)
-- Upcoming (Movie)
-- Popular (TV, Movie)
-- Top Rated (TV)
-- Airing Today (TV)
-- TV Show Detail
-- Movie Detail
-- Search (Movie, TV)
+- [x] Now Playing (Movie) 
+- [x] Upcoming (Movie)
+- [x] Popular (TV, Movie)
+- [x] Top Rated (TV)
+- [x] Airing Today (TV)
+- [x] TV Show Detail
+- [x] Movie Detail
+- [x] Search (Movie, TV)
+
+## Code Challenges 
+
+- [x] IMDB Link
+- [x] Tabs inside of Movie / Show Details YT Videos
+- [ ] Production Company & Countries
+- [ ] Collections Link
+- [ ] /collections Route
+- [ ] On TV Show, show seasons and creators
+
+## My Own Code Challenges 
+
+- [x] Star Ranking on Movie/Show Detail
+- [ ] Tab Sliding
+- [ ] Save Past Detail information on Search 
