@@ -10,6 +10,7 @@ const Container = styled.div`
 
 const Image = styled.div`
     background-image:url(${props=> props.bgUrl});
+    width: 110px;
     height:180px;
     background-size: cover;
     border-radius: 2px;
@@ -24,14 +25,12 @@ const Rating = styled.span`
     opacity:0;
 `;
 
-const Title = styled.span`
+const Name = styled.span`
     top: 5px;
     left : 6px;
     margin : 15px;
-    display: block;
-    position:absolute;
+    position:relative;
     margin-bottom: 3px;
-    opacity: 0;
 `;
 
 
@@ -45,39 +44,25 @@ const ImageContainer = styled.div`
         ${Rating} {
             opacity: 1;
         }
-        ${Title} {
-            opacity: 1;
-        }
     }
 `;
 
-const Poster = ({id, imageUrl, title, rating, year, isMovie = false}) => 
-    <Link to={isMovie? `/movie/${id}` : `/show/${id}`}>
+const Poster = ({imageUrl, name, isMovie = false}) => 
     <Container>
         <ImageContainer>
             <Image bgUrl={
                 imageUrl  
-            ? `https://image.tmdb.org/t/p/w500${imageUrl}` 
+            ? `https://image.tmdb.org/t/p/original${imageUrl}` 
             : require("../Assets/NoPosterSmall.png").default}/>
-            <Title>{title.length > 18 ? `${title.substring(0, 18)}...` : title} ({year})</Title>
-            <Rating>
-                <span role="img" aria-label="rating">
-                    ⭐ 
-                </span>{" "}
-            {Math.floor((rating/2)* 10) /10}/5
-            </Rating>
         </ImageContainer>
+        <div>
+            <Name/>
+            </div>
     </Container>
-    </Link>
 
 
 Poster.propTypes = {
-    imageUrl: PropTypes.string,
-    id: PropTypes.number.isRequired,
-    title: PropTypes.string.isRequired,
-    rating: PropTypes.number,
-    year: PropTypes.string,
-    isMovie: PropTypes.bool
+    imageUrl: PropTypes.string
 }
 
 export default Poster;

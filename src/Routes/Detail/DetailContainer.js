@@ -39,11 +39,24 @@ export default class extends React.Component {
         }
       }
     render() {
+        const responsive = {
+          0: {
+            items: 1
+          },
+          568: {
+            items: 2
+          },
+          1024: {
+            items: 3
+          }
+        };
         const {result, error, loading} = this.state;
-        return (<DetailPresenter 
+        return (
+            <DetailPresenter 
             result={result} 
             error={error}
             loading={loading}
+            responsive={responsive}
             />);
     }
 }

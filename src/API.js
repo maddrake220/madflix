@@ -4,7 +4,7 @@ const api = axios.create({
     baseURL:"https://api.themoviedb.org/3/",
     params: {
         api_key: "a127a7776848f42bc0b876f6e53c9203",
-        language: "en-US"
+        language: "ko"
     }
 })
 
@@ -14,7 +14,7 @@ export const moviesApi = {
     popular: () => api.get("movie/popular"),
     movieDetail: (id) => api.get(`movie/${id}`, {
         params: {
-            append_to_response: "videos"
+            append_to_response: "videos,credits"
         }
     }),
     search: (term) => api.get("search/movie", {

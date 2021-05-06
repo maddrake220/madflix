@@ -31,7 +31,7 @@ const HomePresenter = ({
                         <Poster 
                                 key={movie.id}
                                 id={movie.id}
-                                title={movie.original_title}
+                                title={movie.title}
                                 imageUrl={movie.poster_path}
                                 isMovie={true}
                                 rating={movie.vote_average}
@@ -44,7 +44,7 @@ const HomePresenter = ({
                         <Poster 
                                 key={movie.id}
                                 id={movie.id}
-                                title={movie.original_title}
+                                title={movie.title}
                                 imageUrl={movie.poster_path}
                                 isMovie={true}
                                 rating={movie.vote_average}
@@ -57,7 +57,7 @@ const HomePresenter = ({
                         <Poster 
                                 key={movie.id}
                                 id={movie.id}
-                                title={movie.original_title}
+                                title={movie.title}
                                 imageUrl={movie.poster_path}
                                 isMovie={true}
                                 rating={movie.vote_average}
@@ -82,5 +82,3 @@ HomePresenter.propTypes = {
 };
 
 export default HomePresenter;
-
-<Section title="Now Playing"></Section>

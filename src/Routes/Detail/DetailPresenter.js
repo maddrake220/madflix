@@ -1,5 +1,5 @@
 
-import React from "react";
+import React , { useState } from "react";
 import propTypes from "prop-types";
 import styled from "styled-components";
 import Loader from "../../Components/Loader";
@@ -12,7 +12,15 @@ import { film } from "react-icons-kit/icomoon/film";
 import { Helmet } from "react-helmet";
 import Message from "../../Components/Message";
 import YouTube from 'react-youtube';
-
+import Section from "../../Components/Section";
+import Carousel from 'react-elastic-carousel';
+import Carousel2 from 'react-bootstrap/Carousel';
+import Tabs from 'react-bootstrap/Tabs';
+import Tab from 'react-bootstrap/Tab';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import Portrait from "../../Components/Portrait";
+import "react-alice-carousel/lib/alice-carousel.css";
+import AliceCarousel from 'react-alice-carousel';
 
 const StarIconContainer = 
     withBaseIcon({ size: 12, style: {color: 'yellow'}}
@@ -33,6 +41,7 @@ const Container = styled.div`
   padding: 50px;
 `;
 
+
 const Backdrop = styled.div`
   position: absolute;
   top: 0;
@@ -46,7 +55,17 @@ const Backdrop = styled.div`
   opacity: 0.5;
   z-index: 0;
 `;
-
+const Logo = styled.div`
+    background-image:url(${props=> props.bgImage});
+    width: auto;
+    height:50px;
+    background-size: 100% 100%;
+    border-radius: 1px; 
+`;
+const LogoContainer = styled.div`
+  margin-left : 15px;
+  margin-top : 30px;
+`;
 const Content = styled.div`
   display: flex;
   width: 100%;
@@ -65,41 +84,42 @@ const Cover = styled.div`
 `;
 
 const Data = styled.div`
-    width: 70%;
+    width: 50%;
     margin-left: 20px;
-
 `;
 
 const Title = styled.h3`
-    font-size : 32px;
+    font-size : 42px;
+    margin-left : 10px;
+    margin-top : 20px;
     margin-bottom : 10px;
 `;
 
 const Item = styled.span`
-
+  font-size : 14px;
 `;
-
 const Video = styled.div`
-    margin-top: 20px;
-    margin-bottom: 20px;
+  margin-top : 20px;
+  margin-left: 20px;
 `;
+
 const ItemContainer = styled.div`
-margin:20px 0;
+  margin:20px 0;
 `;
 
 const Divider = styled.span`
     margin: 0 10px;
 `;
 
-
 const Overview = styled.p`
-    font-size:12px;
+    font-size:13px;
     opacity:0.7;
     line-height:1.5;
-    width:50%;
+    width:60%;
 `;
 
-function DetailPresenter  ({ result, loading, error }) {
+function DetailPresenter  ({ result, loading, error, responsive }) {
+
     const opts = {
         height: '390',
         width: '640',
@@ -107,6 +127,12 @@ function DetailPresenter  ({ result, loading, error }) {
           autoplay: 0,
         },
       };
+      const [index, setIndex] = useState(0);
+
+      const handleSelect = (selectedIndex, e) => {
+        setIndex(selectedIndex);
+      };
+    
   return (
       
     loading ? (
@@ -117,7 +143,8 @@ function DetailPresenter  ({ result, loading, error }) {
     <Loader />
       </>
   ) : (
-    error ? <Message /> : (<Container>
+    error ? <Message /> : (
+    <Container>
         <Helmet>
           <title>{result.original_title 
                 ? result.original_title 
@@ -135,6 +162,8 @@ function DetailPresenter  ({ result, loading, error }) {
           }
         />
         <Data>
+        <Tabs defaultActiveKey="home" transition={false} id="noanim-tab-example">
+          <Tab eventKey="home" title="영화정보">
             <Title>
                 {result.original_title 
                 ? result.original_title 
@@ -150,7 +179,7 @@ function DetailPresenter  ({ result, loading, error }) {
                 <Item>
                     {result.runtime 
                     ? result.runtime
-                    : result.episode_run_time && result.episode_run_time[0] } Min 
+                    : result.episode_run_time && result.episode_run_time[0] } 분 
                 </Item>
                 <Divider>.</Divider>
                 <Item>
@@ -167,28 +196,57 @@ function DetailPresenter  ({ result, loading, error }) {
                 </Item>
                 <Divider>.</Divider>
                 <Item>
-                    {[...Array(parseInt(Math.floor((result.vote_average/2)* 10) /10))].map((n, index) => {
-                    return (<StarIconContainer icon={starFull}/>)
-                })}{[...Array(result.vote_average%2 >= 0.5 ? 1 : 0)].map((n, index) => {
-                    return (<StarIconContainer icon={starHalf}/>)
-                })}{[...Array(result.vote_average%2 >= 0.5 ? 4-parseInt(Math.floor((result.vote_average/2)* 10) /10) 
-                    : 5-parseInt(Math.floor((result.vote_average/2)* 10) /10) )].map((n, index) => {
-                    return (<StarIconContainer icon={starEmpty}/>)
-                })}
-                {Math.floor((result.vote_average/2)* 10) /10}/5
+                      {[...Array(parseInt(Math.floor((result.vote_average/2)* 10) /10))].map((n, index) => {
+                      return (<StarIconContainer icon={starFull}/>)
+                  })}{[...Array(result.vote_average%2 >= 0.5 ? 1 : 0)].map((n, index) => {
+                      return (<StarIconContainer icon={starHalf}/>)
+                  })}{[...Array(result.vote_average%2 >= 0.5 ? 4-parseInt(Math.floor((result.vote_average/2)* 10) /10) 
+                      : 5-parseInt(Math.floor((result.vote_average/2)* 10) /10) )].map((n, index) => {
+                      return (<StarIconContainer icon={starEmpty}/>)
+                  })} {Math.floor((result.vote_average/2)* 10) /10}/5
                 </Item>
-                <Video>
-                <YouTube videoId={result.videos.results[0].key} opts={opts}/>
-                </Video>
+                <h3>
+                  <Item>
+                      {result.production_countries && result.production_countries.map((country) =>
+                        `[${country.name}]`
+                          )}
+                  </Item>
+                </h3>
+                        
             </ItemContainer>
-            <Overview>{result.overview}</Overview>
-        </Data>
+                        
+                <Overview>{result.overview}</Overview>
+            </Tab>
+                <Tab eventKey="profile" title="제작사/출연진">
+            <LogoContainer>
+              <Section title="제작사">
+                {result.production_companies.map(logopath => logopath.logo_path ? 
+                  <Logo bgImage = {`https://image.tmdb.org/t/p/original${logopath.logo_path}`} /> : console.log(logopath.logo_path)) }
+              </Section>
+        <AliceCarousel responsive={responsive}> 
+                {result.credits.cast.map(credit => credit.profile_path ? 
+                  <Portrait imageUrl = {credit.profile_path} Name = {credit.original_name} /> : console.log(credit.profile_path)) }
+                  </AliceCarousel>
+            </LogoContainer>
+            </Tab>
+            <Tab eventKey="Clip" title="예고편">
+                            <Video>
+                              <YouTube 
+                                  videoId={result.videos.results[0] ? result.videos.results[0].key : console.log(result.videos.results)}
+                                  opts={opts}/>
+                            </Video>
+                </Tab>
+                
+                </Tabs>
+            </Data>
+        
       </Content>
-    </Container>)
+    </Container>
+    
+    )
   ))};
 
   
-
 DetailPresenter.propTypes = {
     result:propTypes.object,
     error:propTypes.string,
