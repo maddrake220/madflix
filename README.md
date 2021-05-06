@@ -23,13 +23,12 @@ Learning React, ES6, TypeScript, Css by building a Moive Discovery App
 
 - [x] IMDB Link
 - [x] Tabs inside of Movie / Show Details YT Videos
-- [X] Production Company & Countries
-- [ ] Collections Link
-- [ ] /collections Route
+- [X] Production Company & Countries 
+- [X] Similar product Links
 - [ ] On TV Show, show seasons and creators
 
 ## My Own Code Challenges 
 
 - [x] Star Ranking on Movie/Show Detail
-- [ ] Tab Sliding
+- [x] Tab & Carousel
 - [ ] Save Past Detail information on Search 

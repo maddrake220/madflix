@@ -9,6 +9,7 @@ import { starFull } from "react-icons-kit/icomoon/starFull";
 import { starHalf } from "react-icons-kit/icomoon/starHalf";
 import { starEmpty } from "react-icons-kit/icomoon/starEmpty";
 import { film } from "react-icons-kit/icomoon/film";
+import { home } from "react-icons-kit/icomoon/home";
 import { Helmet } from "react-helmet";
 import Message from "../../Components/Message";
 import YouTube from 'react-youtube';
@@ -19,6 +20,7 @@ import Tabs from 'react-bootstrap/Tabs';
 import Tab from 'react-bootstrap/Tab';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Portrait from "../../Components/Portrait";
+import Poster from "../../Components/Poster";
 import "react-alice-carousel/lib/alice-carousel.css";
 import AliceCarousel from 'react-alice-carousel';
 
@@ -41,6 +43,9 @@ const Container = styled.div`
   padding: 50px;
 `;
 
+const Similar_stuff = styled.div`
+  margin-top : 100px;
+`;
 
 const Backdrop = styled.div`
   position: absolute;
@@ -118,7 +123,7 @@ const Overview = styled.p`
     width:60%;
 `;
 
-function DetailPresenter  ({ result, loading, error, responsive }) {
+function DetailPresenter  ({ result, loading, error }) {
 
     const opts = {
         height: '390',
@@ -127,11 +132,13 @@ function DetailPresenter  ({ result, loading, error, responsive }) {
           autoplay: 0,
         },
       };
-      const [index, setIndex] = useState(0);
-
-      const handleSelect = (selectedIndex, e) => {
-        setIndex(selectedIndex);
-      };
+      const breakPoints = [
+        { width: 1, itemsToShow: 1 },
+        { width: 250, itemsToShow: 2, itemsToScroll: 2 },
+        { width: 348, itemsToShow: 3 },
+        { width: 560, itemsToShow: 4 },
+        { width: 720, itemsToShow: 5 }
+      ];
     
   return (
       
@@ -196,6 +203,12 @@ function DetailPresenter  ({ result, loading, error, responsive }) {
                 </Item>
                 <Divider>.</Divider>
                 <Item>
+                      {result.homepage 
+                        ? <a href={result.homepage}><LinkIconContainer icon={home}/></a> 
+                        : <CantLinkIconContainer icon={home}/>  }
+                </Item>
+                <Divider>.</Divider>
+                <Item>
                       {[...Array(parseInt(Math.floor((result.vote_average/2)* 10) /10))].map((n, index) => {
                       return (<StarIconContainer icon={starFull}/>)
                   })}{[...Array(result.vote_average%2 >= 0.5 ? 1 : 0)].map((n, index) => {
@@ -223,17 +236,21 @@ function DetailPresenter  ({ result, loading, error, responsive }) {
                 {result.production_companies.map(logopath => logopath.logo_path ? 
                   <Logo bgImage = {`https://image.tmdb.org/t/p/original${logopath.logo_path}`} /> : console.log(logopath.logo_path)) }
               </Section>
-        <AliceCarousel responsive={responsive}> 
-                {result.credits.cast.map(credit => credit.profile_path ? 
-                  <Portrait imageUrl = {credit.profile_path} Name = {credit.original_name} /> : console.log(credit.profile_path)) }
-                  </AliceCarousel>
+              출연진
+              <Carousel breakPoints={breakPoints}>
+                {result.credits.cast.map(credit => credit.known_for_department === "Acting" && credit.profile_path ? 
+                  <Portrait imageUrl = {credit.profile_path} name = {credit.original_name} character_name = {credit.character}  /> : console.log(credit.profile_path)) }
+              </Carousel>
             </LogoContainer>
             </Tab>
-            <Tab eventKey="Clip" title="예고편">
+            <Tab eventKey="Clip" title="관련클립">
                             <Video>
+                              {result.videos.results[0] ? 
                               <YouTube 
                                   videoId={result.videos.results[0] ? result.videos.results[0].key : console.log(result.videos.results)}
                                   opts={opts}/>
+                              : <h5>관련 클립이 없습니다 ! </h5>
+                              }
                             </Video>
                 </Tab>
                 
@@ -241,6 +258,33 @@ function DetailPresenter  ({ result, loading, error, responsive }) {
             </Data>
         
       </Content>
+      <Similar_stuff>
+        <Section>
+        {result.original_title 
+        
+        ? result.similar.results.map(sim => 
+                  <Poster
+                  key={sim.id}
+                  id={sim.id}
+                  title={sim.title}
+                  imageUrl={sim.poster_path}
+                  isMovie={true}
+                  rating={sim.vote_average}
+                  year={sim.release_date && sim.release_date.substring(0,4)} />)
+        : result.similar.results.map(sim => 
+          <Poster
+          key={sim.id}
+          id={sim.id}
+          title={sim.original_name}
+          imageUrl={sim.backdrop_path}
+          isMovie={false}
+          rating={sim.vote_average}
+          year={sim.first_air_date && sim.first_air_date.substring(0,4)} />)
+                
+                }           
+        </Section>  
+
+      </Similar_stuff>
     </Container>
     
     )

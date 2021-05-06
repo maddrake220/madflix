@@ -22,6 +22,7 @@ const Rating = styled.span`
     right : 6px;
     position:absolute;
     opacity:0;
+    color: white;
 `;
 
 const Title = styled.span`
@@ -32,6 +33,7 @@ const Title = styled.span`
     position:absolute;
     margin-bottom: 3px;
     opacity: 0;
+    color: white;
 `;
 
 
@@ -40,7 +42,7 @@ const ImageContainer = styled.div`
     position:relative;
     &:hover{
         ${Image} {
-            opacity: 0.3;
+            opacity: 0.2;
         }
         ${Rating} {
             opacity: 1;
@@ -52,7 +54,7 @@ const ImageContainer = styled.div`
 `;
 
 const Poster = ({id, imageUrl, title, rating, year, isMovie = false}) => 
-    <Link to={isMovie? `/movie/${id}` : `/show/${id}`}>
+    <Link to={isMovie? `/movie/${id}` : `/show/${id}`}  >
     <Container>
         <ImageContainer>
             <Image bgUrl={
