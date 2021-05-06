@@ -26,7 +26,7 @@ const HomePresenter = ({
              실행되기 떄문에 항상 Load check해야한다.*/
                 <Container>
                     {nowPlaying && nowPlaying.length > 0 && (
-                    <Section title="Now Playing">
+                    <Section title="현재 상영중">
                         {nowPlaying.map(movie => 
                         <Poster 
                                 key={movie.id}
@@ -39,7 +39,7 @@ const HomePresenter = ({
                     </Section>)
                     }
                     {upcoming && upcoming.length > 0 && (
-                    <Section title="Upcoming Movies">
+                    <Section title="상영 예정">
                         {upcoming.map(movie => 
                         <Poster 
                                 key={movie.id}
@@ -52,7 +52,7 @@ const HomePresenter = ({
                     </Section>)
                     }
                     {popular && popular.length > 0 && (
-                    <Section title="Popular Movies">
+                    <Section title="인기 영화">
                         {popular.map(movie => 
                         <Poster 
                                 key={movie.id}

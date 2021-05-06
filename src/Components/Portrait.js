@@ -1,6 +1,5 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 const Container = styled.div`
@@ -15,13 +14,6 @@ const Image = styled.div`
     background-size: cover;
     border-radius: 2px;
     background-position:center center;
-`;
-
-const Rating = styled.span`
-    bottom: 5px;
-    right : 6px;
-    position:absolute;
-    opacity:0;
 `;
 
 const Name = styled.h2`
@@ -43,15 +35,15 @@ const ImageContainer = styled.div`
 
 const Data = styled.div`
 `;
-const Poster = ({imageUrl, name, character_name,  isMovie = false}) => 
+const Poster = ({imageUrl, name, character_name}) => 
     <Container>
         <ImageContainer>
             <Image bgUrl={
                 imageUrl  
             ? `https://image.tmdb.org/t/p/original${imageUrl}` 
             : require("../Assets/NoPosterSmall.png").default}/>
-            <Name>-{name}</Name>
-            <Character_name>-{character_name}</Character_name>
+            <Name>* {name}</Name>
+            <Character_name>- {character_name}</Character_name>
         </ImageContainer>
         <Data>
         </Data>
@@ -61,8 +53,7 @@ const Poster = ({imageUrl, name, character_name,  isMovie = false}) =>
 Poster.propTypes = {
     imageUrl: PropTypes.string,
     name : PropTypes.string,
-    character_name : PropTypes.string,
-    isMovie : PropTypes.bool.isRequired
+    character_name : PropTypes.string
 }
 
 export default Poster;

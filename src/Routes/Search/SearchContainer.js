@@ -25,7 +25,7 @@ export default class extends React.Component {
         })
     }
     searchByTerm = async() => {
-        const {searchTerm} = this.state;
+            const {searchTerm} = this.state;
         try {
             const {data: {
                 results:movieResults}} = await moviesApi.search(searchTerm)

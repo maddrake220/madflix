@@ -1,9 +1,8 @@
 
-import React , { useState } from "react";
+import React from "react";
 import propTypes from "prop-types";
 import styled from "styled-components";
 import Loader from "../../Components/Loader";
-import { Icon } from 'react-icons-kit'
 import { withBaseIcon } from 'react-icons-kit'
 import { starFull } from "react-icons-kit/icomoon/starFull";
 import { starHalf } from "react-icons-kit/icomoon/starHalf";
@@ -15,14 +14,12 @@ import Message from "../../Components/Message";
 import YouTube from 'react-youtube';
 import Section from "../../Components/Section";
 import Carousel from 'react-elastic-carousel';
-import Carousel2 from 'react-bootstrap/Carousel';
 import Tabs from 'react-bootstrap/Tabs';
 import Tab from 'react-bootstrap/Tab';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Portrait from "../../Components/Portrait";
 import Poster from "../../Components/Poster";
 import "react-alice-carousel/lib/alice-carousel.css";
-import AliceCarousel from 'react-alice-carousel';
 
 const StarIconContainer = 
     withBaseIcon({ size: 12, style: {color: 'yellow'}}
@@ -36,6 +33,9 @@ const CantLinkIconContainer =
     withBaseIcon({ size: 12, style: {color: 'Grey'}}
 )
 
+const LinkContainer = styled.span`
+  margin-left : 15px;
+`;
 const Container = styled.div`
   height: calc(100vh - 50px);
   width: 100%;
@@ -43,6 +43,11 @@ const Container = styled.div`
   padding: 50px;
 `;
 
+const TabsContainer = styled.div`
+  position: relative;
+  margin-top : 35px;
+  margin-left : 10px;
+`;
 const Similar_stuff = styled.div`
   margin-top : 100px;
 `;
@@ -71,6 +76,12 @@ const LogoContainer = styled.div`
   margin-left : 15px;
   margin-top : 30px;
 `;
+
+const SeriesContainer = styled.div`
+  margin-top : 15px;
+  margin-left : 30px;
+  font-size: 14px;
+`;
 const Content = styled.div`
   display: flex;
   width: 100%;
@@ -89,8 +100,9 @@ const Cover = styled.div`
 `;
 
 const Data = styled.div`
+    
     width: 50%;
-    margin-left: 20px;
+    margin-left: 40px;
 `;
 
 const Title = styled.h3`
@@ -154,8 +166,8 @@ function DetailPresenter  ({ result, loading, error }) {
     <Container>
         <Helmet>
           <title>{result.original_title 
-                ? result.original_title 
-                : result.original_name } | Madflix</title>
+                ? result.title 
+                : result.name } | Madflix</title>
         </Helmet>
       <Backdrop
         bgImage={`https://image.tmdb.org/t/p/original${result.backdrop_path}`}
@@ -169,13 +181,24 @@ function DetailPresenter  ({ result, loading, error }) {
           }
         />
         <Data>
-        <Tabs defaultActiveKey="home" transition={false} id="noanim-tab-example">
-          <Tab eventKey="home" title="영화정보">
             <Title>
                 {result.original_title 
-                ? result.original_title 
-                : result.original_name }
-            </Title>
+                ? result.title 
+                : result.name }
+                <LinkContainer>
+                     {result.imdb_id 
+                        ? <a target="_blank" href={`https://www.imdb.com/title/${result.imdb_id}` }><LinkIconContainer icon={film}/></a> 
+                        : <CantLinkIconContainer icon={film}/>  }
+                </LinkContainer>
+                <LinkContainer>
+                      {result.homepage 
+                        ? <a target="_blank" href={result.homepage}><LinkIconContainer icon={home}/></a> 
+                        : <CantLinkIconContainer icon={home}/>  }
+                 </LinkContainer>
+                </Title>
+        <TabsContainer>
+        <Tabs defaultActiveKey="home" transition={false} id="noanim-tab-example">
+          <Tab eventKey="home" title="영화정보">
             <ItemContainer>
                 <Item>
                     {result.release_date 
@@ -194,18 +217,6 @@ function DetailPresenter  ({ result, loading, error }) {
                       index === result.genres.length - 1
                       ? genre.name : `${genre.name}/`
                         )}
-                </Item>
-                <Divider>.</Divider>
-                <Item>
-                     {result.imdb_id 
-                        ? <a href={`https://www.imdb.com/title/${result.imdb_id}`}><LinkIconContainer icon={film}/></a> 
-                        : <CantLinkIconContainer icon={film}/>  }
-                </Item>
-                <Divider>.</Divider>
-                <Item>
-                      {result.homepage 
-                        ? <a href={result.homepage}><LinkIconContainer icon={home}/></a> 
-                        : <CantLinkIconContainer icon={home}/>  }
                 </Item>
                 <Divider>.</Divider>
                 <Item>
@@ -249,17 +260,32 @@ function DetailPresenter  ({ result, loading, error }) {
                               <YouTube 
                                   videoId={result.videos.results[0] ? result.videos.results[0].key : console.log(result.videos.results)}
                                   opts={opts}/>
-                              : <h5>관련 클립이 없습니다 ! </h5>
+                              : <h5>관련 영상클립이 없습니다 ! </h5>
                               }
                             </Video>
                 </Tab>
+                {result.original_name 
+                ?
+                <Tab eventKey="Series" title="시리즈">
+                  <SeriesContainer>
+                    <Carousel breakPoints={breakPoints}>
+                      {result.seasons.map(season => season.name ? 
+                      <Portrait imageUrl = {season.poster_path} name = {season.name} character_name = {season.air_date && season.air_date.substring(0,4)}  /> : console.log(season.profile_path)) }
+                    </Carousel>
+                  </SeriesContainer>
+                </Tab>
+                :
+                console.log(result.original_name)
+              
+              }
                 
                 </Tabs>
+                </TabsContainer>
             </Data>
         
       </Content>
       <Similar_stuff>
-        <Section>
+        <Section title="유사한 영상들">
         {result.original_title 
         
         ? result.similar.results.map(sim => 
@@ -275,7 +301,7 @@ function DetailPresenter  ({ result, loading, error }) {
           <Poster
           key={sim.id}
           id={sim.id}
-          title={sim.original_name}
+          title={sim.name}
           imageUrl={sim.backdrop_path}
           isMovie={false}
           rating={sim.vote_average}

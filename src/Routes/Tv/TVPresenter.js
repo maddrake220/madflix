@@ -24,36 +24,36 @@ const TVPresenter = ({
         {loading ? <Loader/> : 
     <Container>
         {topRated && topRated.length > 0 && (
-        <Section title= "Top Rated Shows">
+        <Section title= "최고 평점 시리즈">
             {topRated.map(show => 
                 <Poster 
                     key={show.id}
                     id={show.id}
-                    title={show.original_name}
+                    title={show.name}
                     imageUrl={show.poster_path}
                     rating={show.vote_average}
                     year={show.first_air_date && show.first_air_date.substring(0,4)} />)}
         </Section>
         )}
         {airingToday && airingToday.length > 0 && (
-        <Section title= "Airing Today">
+        <Section title= "오늘 방영 시리즈">
             {airingToday.map(show => 
                 <Poster 
                     key={show.id}
                     id={show.id}
-                    title={show.original_name}
+                    title={show.name}
                     imageUrl={show.poster_path}
                     rating={show.vote_average}
                     year={show.first_air_date && show.first_air_date.substring(0,4)} />)}
         </Section>
         )}
         {popular && popular.length > 0 && (
-        <Section title= "Popular Shows">
+        <Section title= "인기 시리즈">
             {popular.map(show => 
                 <Poster 
                     key={show.id}
                     id={show.id}
-                    title={show.original_name}
+                    title={show.name}
                     imageUrl={show.poster_path}
                     rating={show.vote_average}
                     year={show.first_air_date && show.first_air_date.substring(0,4)} />)}
