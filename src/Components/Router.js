@@ -5,6 +5,7 @@ import Search from "../Routes/Search/index";
 import Tv from "../Routes/Tv/index";
 import Header from "./Header";
 import Detail from "../Routes/Detail/index";
+import Movie from "../Routes/Movie";
 /* Arrow Function 에서 Return을 사용하지 않을 경우 () 를 사용!!! */
 export default () => (
    <Router>
@@ -12,6 +13,7 @@ export default () => (
         <Header />
         <Switch>
             <Route path="/" exact="exact" component={Home}/>
+            <Route path="/movie" exact="exact" component={Movie}/>
             <Route path="/search" exact="exact" component={Search}/>
             <Route path="/tv" exact="exact" component={Tv}/>
             <Route path="/movie/:id" render={(props) => ( <Detail key={props.match.params.id} {...props}/>)}/>

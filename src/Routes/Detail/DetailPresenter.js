@@ -7,7 +7,7 @@ import { withBaseIcon } from 'react-icons-kit'
 import { starFull } from "react-icons-kit/icomoon/starFull";
 import { starHalf } from "react-icons-kit/icomoon/starHalf";
 import { starEmpty } from "react-icons-kit/icomoon/starEmpty";
-import { film } from "react-icons-kit/icomoon/film";
+import { clapperboard } from "react-icons-kit/entypo/clapperboard";
 import { home } from "react-icons-kit/icomoon/home";
 import { Helmet } from "react-helmet";
 import Message from "../../Components/Message";
@@ -19,18 +19,49 @@ import Tab from 'react-bootstrap/Tab';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Portrait from "../../Components/Portrait";
 import Poster from "../../Components/Poster";
-import "react-alice-carousel/lib/alice-carousel.css";
 
+const CarouselContainer = styled(Carousel)`
+  .rec.rec-arrow {
+      border-radius: 0;
+      background-color: rgba(114, 114, 114, 0.2);
+  }
+  
+  .rec.rec-dot {
+    
+      background-color: rgba(114, 114, 114, 0.2);
+      
+  }
+  .rec.rec-dot_active {
+      border-color: black;
+      background-color: black;
+       
+    }
+  /* round buttons on hover */
+  .rec.rec-arrow:hover {
+      border-radius: 50%;
+      background-color: black;
+  }
+  /* hide disabled buttons */
+  .rec.rec-arrow:disabled {
+      visibility: hidden;
+  }
+  .rec-carousel-item:focus {
+    outline: none;
+    box-shadow: inset 0 0 1px 1px lightgrey;
+    
+}
+
+`;
 const StarIconContainer = 
     withBaseIcon({ size: 12, style: {color: 'yellow'}}
 )
 
 const LinkIconContainer = 
-    withBaseIcon({ size: 12, style: {color: 'Red'}}
+    withBaseIcon({ size: 22, style: {color: 'Red'}}
 )
 
 const CantLinkIconContainer = 
-    withBaseIcon({ size: 12, style: {color: 'Grey'}}
+    withBaseIcon({ size: 22, style: {color: 'Grey'}}
 )
 
 const LinkContainer = styled.span`
@@ -122,6 +153,7 @@ const Video = styled.div`
 
 const ItemContainer = styled.div`
   margin:20px 0;
+  font-size: 12px;
 `;
 
 const Divider = styled.span`
@@ -187,8 +219,8 @@ function DetailPresenter  ({ result, loading, error }) {
                 : result.name }
                 <LinkContainer>
                      {result.imdb_id 
-                        ? <a target="_blank" href={`https://www.imdb.com/title/${result.imdb_id}` }><LinkIconContainer icon={film}/></a> 
-                        : <CantLinkIconContainer icon={film}/>  }
+                        ? <a target="_blank" href={`https://www.imdb.com/title/${result.imdb_id}` }><LinkIconContainer icon={clapperboard}/></a> 
+                        : <CantLinkIconContainer icon={clapperboard}/>  }
                 </LinkContainer>
                 <LinkContainer>
                       {result.homepage 
@@ -248,10 +280,10 @@ function DetailPresenter  ({ result, loading, error }) {
                   <Logo bgImage = {`https://image.tmdb.org/t/p/original${logopath.logo_path}`} /> : console.log(logopath.logo_path)) }
               </Section>
               출연진
-              <Carousel breakPoints={breakPoints}>
+              <CarouselContainer breakPoints={breakPoints}>
                 {result.credits.cast.map(credit => credit.known_for_department === "Acting" && credit.profile_path ? 
                   <Portrait imageUrl = {credit.profile_path} name = {credit.original_name} character_name = {credit.character}  /> : console.log(credit.profile_path)) }
-              </Carousel>
+              </CarouselContainer>
             </LogoContainer>
             </Tab>
             <Tab eventKey="Clip" title="관련클립">
@@ -268,10 +300,10 @@ function DetailPresenter  ({ result, loading, error }) {
                 ?
                 <Tab eventKey="Series" title="시리즈">
                   <SeriesContainer>
-                    <Carousel breakPoints={breakPoints}>
+                    <Section>
                       {result.seasons.map(season => season.name ? 
                       <Portrait imageUrl = {season.poster_path} name = {season.name} character_name = {season.air_date && season.air_date.substring(0,4)}  /> : console.log(season.profile_path)) }
-                    </Carousel>
+                    </Section>
                   </SeriesContainer>
                 </Tab>
                 :
@@ -285,7 +317,7 @@ function DetailPresenter  ({ result, loading, error }) {
         
       </Content>
       <Similar_stuff>
-        <Section title="유사한 영상들">
+        <Section title="관련 있는 작품들">
         {result.original_title 
         
         ? result.similar.results.map(sim => 

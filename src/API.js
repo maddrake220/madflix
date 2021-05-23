@@ -43,3 +43,7 @@ export const tvApi = {
     })
 }
 
+export const trendApi = {
+    weeklyTrending: () => api.get("trending/all/week")
+}
+

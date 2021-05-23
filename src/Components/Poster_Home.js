@@ -10,9 +10,9 @@ const Container = styled.div`
 
 const Image = styled.div`
     background-image:url(${props=> props.bgUrl});
-    height:210px;
+    height:480px;
     background-size: cover;
-    border-radius: 2px;
+    border-radius: 5px;
     background-position:center center;
     transition:opacity 0.15s linear;
 `;
@@ -42,7 +42,7 @@ const ImageContainer = styled.div`
     position:relative;
     &:hover{
         ${Image} {
-            opacity: 0.2;
+            opacity: 0.3;
         }
         ${Rating} {
             opacity: 1;
@@ -56,12 +56,13 @@ const ImageContainer = styled.div`
 const Poster = ({id, imageUrl, title, rating, year, isMovie = false}) => 
     <Link to={isMovie? `/movie/${id}` : `/show/${id}`}  >
     <Container>
+        
         <ImageContainer>
             <Image bgUrl={
                 imageUrl  
             ? `https://image.tmdb.org/t/p/w500${imageUrl}` 
             : require("../Assets/NoPosterSmall.png").default}/>
-            <Title>{title.length > 18 ? `${title.substring(0, 18)}...` : title} ({year})</Title>
+            <Title>{title && title.length > 18 ? `${title.substring(0, 18)}...` : title} ({year})</Title>
             <Rating>
                 <span role="img" aria-label="rating">
                     ⭐ 

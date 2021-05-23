@@ -2,18 +2,32 @@ import React from "react";
 import propTypes from "prop-types";
 import styled from "styled-components";
 import { Helmet } from "react-helmet";
-import Section from "../../Components/Section";
 import Loader from "../../Components/Loader";
 import Message from "../../Components/Message";
-import Poster from "../../Components/Poster";
+import Poster_Home from "../../Components/Poster_Home";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 const Container = styled.div`
 padding: 20px;
 `;
+const Title = styled.div`
+    font-size: 13px;
+    padding-bottom: 16px;
+`;
+const settings = {
+    dots: true,
+    infinite: true,
+    speed: 1000,
+    slidesToShow: 6,
+    slidesToScroll: 4
+  };
 
+const Section = styled.div`
+    padding-right: 10px;
+`;
 const HomePresenter = ({
-    nowPlaying,
-    upcoming,
-    popular,
+    weeklyTrending,
     error,
     loading
 }) => ( <>
@@ -22,50 +36,27 @@ const HomePresenter = ({
         </Helmet>
         {
             loading ? <Loader /> : 
-            /* Load를 사용하지 않으면 Presenter가 Loaded 되지 않은 채
-             실행되기 떄문에 항상 Load check해야한다.*/
                 <Container>
-                    {nowPlaying && nowPlaying.length > 0 && (
-                    <Section title="현재 상영중">
-                        {nowPlaying.map(movie => 
-                        <Poster 
-                                key={movie.id}
-                                id={movie.id}
-                                title={movie.title}
-                                imageUrl={movie.poster_path}
-                                isMovie={true}
-                                rating={movie.vote_average}
-                                year={movie.release_date && movie.release_date.substring(0,4)} />)}
-                    </Section>)
-                    }
-                    {upcoming && upcoming.length > 0 && (
-                    <Section title="상영 예정">
-                        {upcoming.map(movie => 
-                        <Poster 
-                                key={movie.id}
-                                id={movie.id}
-                                title={movie.title}
-                                imageUrl={movie.poster_path}
-                                isMovie={true}
-                                rating={movie.vote_average}
-                                year={movie.release_date && movie.release_date.substring(0,4)} />)}
-                    </Section>)
-                    }
-                    {popular && popular.length > 0 && (
-                    <Section title="인기 영화">
-                        {popular.map(movie => 
-                        <Poster 
-                                key={movie.id}
-                                id={movie.id}
-                                title={movie.title}
-                                imageUrl={movie.poster_path}
-                                isMovie={true}
-                                rating={movie.vote_average}
-                                year={movie.release_date && movie.release_date.substring(0,4)} />)}
-                    </Section>)
+                    <Title>이번주 인기 콘텐츠</Title>
+                    {weeklyTrending && weeklyTrending.length > 0 && (
+                        
+                        <Slider  {...settings}>
+                            {weeklyTrending.map(trend => 
+                        <Section>
+                          <Poster_Home
+                                key={trend.id}
+                                id={trend.id}
+                                title={trend.original_title}
+                                isMovie={trend.media_type==="movie" ? true : false}
+                                imageUrl={trend.poster_path}
+                                rating={trend.vote_average}
+                                year={trend.release_date && trend.release_date.substring(0,4)} />
+                         </Section>
+                        )}
+                        </Slider>
+                   )
                     }
                     {error && <Message color="#e74c3c" text={error} />}
-            
                 </Container>
         }
         </>
@@ -74,9 +65,7 @@ const HomePresenter = ({
 /* children은 태그 사이의 값을 받을 수 있다. it's easy to read */
 
 HomePresenter.propTypes = {
-    nowPlaying:propTypes.array,
-    upcoming:propTypes.array,
-    popular:propTypes.array,
+    weeklyTrending:propTypes.array,
     error:propTypes.string,
     loading:propTypes.bool.isRequired
 };
