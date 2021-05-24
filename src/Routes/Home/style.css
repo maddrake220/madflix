@@ -22,11 +22,22 @@
   top: 0;
   color: #fff;
 }
+
+.vid-control {
+  position: absolute;
+  bottom: 255px;
+  right: 0;
+  width: 15%;
+  background-color: rgba(0, 0, 0, 0);
+  color: #fff;
+  padding: 1rem;
+  font-family: Arial, Helvetica, sans-serifl;
+}
 .vid-info {
   position: absolute;
   bottom: 45px;
   left: 0;
-  width: 73%;
+  width: 33%;
   background: rgba(0, 0, 0, 0.3);
   color: #fff;
   padding: 1rem;
