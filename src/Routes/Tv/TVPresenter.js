@@ -9,7 +9,7 @@ import Poster from "../../Components/Poster";
 import { Helmet } from "react-helmet";
 
 const Container = styled.div`
-    padding: 20px;
+    padding: 40px;
 `;
 const TVPresenter = ({
     topRated,

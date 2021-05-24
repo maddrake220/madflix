@@ -14,7 +14,7 @@ const globalStyles = createGlobalStyle`
         font-style: normal;
         font-weight: 700;
         font-size:12px;
-        background-color:rgba(20, 20, 20, 1);
+        background-color:rgba(0, 0, 0, 1);
         color:white;
         padding-top:50px;
     }

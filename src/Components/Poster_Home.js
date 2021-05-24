@@ -40,9 +40,11 @@ const Title = styled.span`
 const ImageContainer = styled.div`
     margin-bottom: 5px;
     position:relative;
+    overflow:hidden ;
     &:hover{
-        ${Image} {
-            opacity: 0.3;
+        ${Image} { 
+            transform: scale(1.3);
+            opacity: 1;
         }
         ${Rating} {
             opacity: 1;

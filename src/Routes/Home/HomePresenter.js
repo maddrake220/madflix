@@ -6,9 +6,14 @@ import Loader from "../../Components/Loader";
 import Message from "../../Components/Message";
 import Poster_Home from "../../Components/Poster_Home";
 import Slider from "react-slick";
+import getYoutubePath from "./getYoutubePath";
+import { Link } from "react-router-dom";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import "./style.css";
+
 const Container = styled.div`
+margin-top: 910px;
 padding: 20px;
 `;
 const Title = styled.div`
@@ -29,14 +34,31 @@ const Section = styled.div`
 const HomePresenter = ({
     weeklyTrending,
     error,
-    loading
+    loading,
+    random
 }) => ( <>
         <Helmet>
             <title>Movies | Madflix</title>
         </Helmet>
         {
-            loading ? <Loader /> : 
+            loading ? <Loader /> : <>
+            <div class="video-background">
+                        <div class="video-foreground">
+                            {weeklyTrending && weeklyTrending.length > 0 ? 
+                            
+                            <iframe class="ww" src={`https://www.youtube-nocookie.com/embed/${getYoutubePath(weeklyTrending[random].id,weeklyTrending[random].media_type)}?autoplay=1&autopause=0&mute=0&loop=1&playlist=${getYoutubePath(weeklyTrending[random].id,weeklyTrending[random].media_type)}&controls=0&vq=hd1080`} frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                             : <Loader/>
+                             }  </div>
+                        </div>
+                        <div id="vidtop-content">
+                            <div class="vid-info">
+                                <h1>{weeklyTrending && weeklyTrending[random].original_title ? weeklyTrending[random].original_title : weeklyTrending[random].name }</h1>
+                                    <p>{weeklyTrending && weeklyTrending[random].overview}</p>
+                                <Link to={`/movie/${weeklyTrending[random].id}`}> 상세 정보</Link>
+                            </div>
+                        </div>
                 <Container>
+                    
                     <Title>이번주 인기 콘텐츠</Title>
                     {weeklyTrending && weeklyTrending.length > 0 && (
                         
@@ -46,7 +68,7 @@ const HomePresenter = ({
                           <Poster_Home
                                 key={trend.id}
                                 id={trend.id}
-                                title={trend.original_title}
+                                title={trend.original_title ? trend.original_title : trend.name}
                                 isMovie={trend.media_type==="movie" ? true : false}
                                 imageUrl={trend.poster_path}
                                 rating={trend.vote_average}
@@ -58,7 +80,7 @@ const HomePresenter = ({
                     }
                     {error && <Message color="#e74c3c" text={error} />}
                 </Container>
-        }
+        </>}
         </>
 
 )

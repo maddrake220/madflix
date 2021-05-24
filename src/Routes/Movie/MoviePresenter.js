@@ -7,7 +7,7 @@ import Loader from "../../Components/Loader";
 import Message from "../../Components/Message";
 import Poster from "../../Components/Poster";
 const Container = styled.div`
-padding: 20px;
+    padding: 40px;
 `;
 
 const MoviePresenter = ({
