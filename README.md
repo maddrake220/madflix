@@ -28,7 +28,7 @@ Learning React, ES6, TypeScript, Css by building a Moive Discovery App
 - [x] Similar product Links
 - [x] On TV Show, show seasons and creators
 
-## My Own Code Challenges
+## My Code Challenges
 
 - [x] Star Ranking on Movie/Show Detail
 - [x] Tab & Carousel
@@ -39,3 +39,4 @@ Learning React, ES6, TypeScript, Css by building a Moive Discovery App
 - [x] -> Working in Edge browser but chrome not working well
 - [x] Weakly Trend on Home
 - [x] Control Youtube Api on Home
+- [x] search korean update on Seach

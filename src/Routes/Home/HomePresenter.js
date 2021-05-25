@@ -40,7 +40,7 @@ const HomePresenter = ({
 
     return ( <>
         <Helmet>
-            <title>Movies | Madflix</title>
+            <title>Home | Madflix</title>
         </Helmet>
         {
             loading ? <Loader /> : <>
