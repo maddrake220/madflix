@@ -1,4 +1,4 @@
-import React, {useRef} from "react";
+import React from "react";
 import propTypes from "prop-types";
 import styled from "styled-components";
 import { Helmet } from "react-helmet";
@@ -57,7 +57,7 @@ const HomePresenter = ({
                           <Poster_Home
                                 key={trend.id}
                                 id={trend.id}
-                                title={trend.original_title ? trend.original_title : trend.name}
+                                title={trend.title ? trend.title : trend.name }
                                 isMovie={trend.media_type==="movie" ? true : false}
                                 imageUrl={trend.poster_path}
                                 rating={trend.vote_average}

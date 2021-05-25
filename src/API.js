@@ -47,3 +47,12 @@ export const trendApi = {
     weeklyTrending: () => api.get("trending/all/week")
 }
 
+export const multiSearchApi = {
+    multiSearch: (term) => api.get("search/multi", {
+        params: {
+            query: term,
+            include_adult: true,
+            page: 1
+        }
+    })
+}

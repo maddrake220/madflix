@@ -8,6 +8,7 @@ import Poster from "../../Components/Poster";
 import { Helmet } from "react-helmet";
 
 const Container = styled.div`
+    margin-top: 20px;
     padding: 0px 20px;
 `;
 
@@ -29,8 +30,7 @@ const SearchTerm = styled.div`
     color: yellow;
 `;
 const SearchPresenter = ({
-    movieResults,
-    tvResults,
+    searchResults,
     searchTerm,
     error,
     loading,
@@ -48,31 +48,19 @@ const SearchPresenter = ({
     </Form>
     {loading ? <Loader/> : <> 
         {pastTerm 
-            ? <SearchTerm>'{pastTerm}' 전체 검색결과가 {movieResults.length + tvResults.length}건 있습니다.</SearchTerm> : pastTerm}
-        {movieResults && movieResults.length >0 && 
+            ? <SearchTerm>'{pastTerm}' 전체 검색결과가 {searchResults.length}건 있습니다.</SearchTerm> : pastTerm}
+        {searchResults && searchResults.length >0 && 
         
-        <Section title = "영화 검색결과">
-            {movieResults.map(movie => (
+        <Section title = "검색결과">
+            {searchResults.map(result => (
                 <Poster 
-                key={movie.id}
-                id={movie.id}
-                title={movie.title}
-                imageUrl={movie.poster_path}
-                isMovie={true}
-                rating={movie.vote_average}
-                year={movie.release_date && movie.release_date.substring(0,4)} /> 
-        ))}</Section>
-        }
-        {tvResults && tvResults.length >0 && 
-        <Section title = "TV프로그램 검색결과">
-            {tvResults.map(show => (
-                <Poster 
-                key={show.id}
-                id={show.id}
-                title={show.name}
-                imageUrl={show.poster_path}
-                rating={show.vote_average}
-                year={show.first_air_date && show.first_air_date.substring(0,4)} /> 
+                key={result.id}
+                id={result.id}
+                title={result.title ? result.title : result.name && result.name}
+                imageUrl={result.poster_path}
+                isMovie={result.media_type === "movie" ? true : false}
+                rating={result.vote_average}
+                year={result.release_date ? result.release_date.substring(0,4) : result.first_air_date && result.first_air_date.substring(0,4)} /> 
         ))}</Section>
         }
         {error && <Message color="#e74c3c" text={error} />}
@@ -80,8 +68,7 @@ const SearchPresenter = ({
 </Container>;
 
 SearchPresenter.propTypes = {
-    movieResults:propTypes.array,
-    tvResults:propTypes.array,
+    searchResults:propTypes.array,
     searchTerm:propTypes.string,
     pastTerm:propTypes.string,
     error:propTypes.string,

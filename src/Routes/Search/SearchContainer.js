@@ -1,11 +1,10 @@
 import React from "react";
-import { moviesApi, tvApi  } from "../../API";
+import { multiSearchApi  } from "../../API";
 import SearchPresenter from "./SearchPresenter";
 
 export default class extends React.Component {
     state = {
-        movieResults: null,
-        tvResults: null,
+        searchResults: null,
         searchTerm: "",
         error: null,
         loading: false,
@@ -28,10 +27,8 @@ export default class extends React.Component {
             const {searchTerm} = this.state;
         try {
             const {data: {
-                results:movieResults}} = await moviesApi.search(searchTerm)
-            const {data: {
-                results:tvResults}} = await tvApi.search(searchTerm)
-            this.setState({pastTerm: searchTerm, movieResults, tvResults, loading : true});
+                results:searchResults}} = await multiSearchApi.multiSearch(searchTerm)
+            this.setState({pastTerm: searchTerm, searchResults, loading : true});
         } catch {
             this.setState({ error : "Can't find results"})
         } finally {
@@ -39,10 +36,9 @@ export default class extends React.Component {
         }
     }
     render() {
-        const {movieResults,tvResults,searchTerm, error, loading, pastTerm} = this.state;
+        const {searchResults, searchTerm, error, loading, pastTerm} = this.state;
         return (<SearchPresenter 
-            movieResults={movieResults} 
-            tvResults={tvResults} 
+            searchResults={searchResults} 
             searchTerm={searchTerm}
             pastTerm={pastTerm}
             error={error}

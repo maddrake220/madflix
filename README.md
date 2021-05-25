@@ -34,9 +34,8 @@ Learning React, ES6, TypeScript, Css by building a Moive Discovery App
 - [x] Tab & Carousel
 - [x] Save Past Detail information on Search
 - [x] Separate Home & Movie Routes
-- [ ] hover Poster -> reSizing
+- [x] hover Poster -> reSizing
 - [x] play iFrame video background on Home
-      -> Working in Edge browser but chrome not working well
+- [x] -> Working in Edge browser but chrome not working well
 - [x] Weakly Trend on Home
-- [ ] Fix all Class Components -> Hooks Components
-- [ ] Add Favorites & Wishlist (Login or Cookie )
+- [x] Control Youtube Api on Home

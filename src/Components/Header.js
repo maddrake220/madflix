@@ -32,12 +32,14 @@ const Header = styled.header`
   `
 
 const RightMenu = styled.div` 
+    margin-top: 10px;
     padding-right: 25px;
     float: right;
     display: flex;
     font-size: 20px;
 `;
 const List = styled.ul`
+    margin-top: 10px;
     float: left;
     display:flex;
     
@@ -58,8 +60,10 @@ const SLink = styled(Link)`
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 13px;
+    font-size: 17px;
     &:hover{
+        color: RED;
+        text-decoration: none;
         opacity: 0.9;
     }
   `;

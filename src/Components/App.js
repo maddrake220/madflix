@@ -1,7 +1,6 @@
 import React, {Component} from "react";
 import Router from "./Router";
 import GlobalStyles from "./GlobalStyles";
-import Slider from "react-slick";
 
   /* Header폴더에 index파일이 있기 때문에 
   Header/Header와 같이 사용하지 않아도 된다. */

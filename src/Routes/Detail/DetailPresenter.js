@@ -73,7 +73,11 @@ const Container = styled.div`
   position: relative;
   padding: 50px;
 `;
-
+const Country = styled.div`
+  font-size: 15px;
+  margin-bottom: 25px;
+  
+`;
 const TabsContainer = styled.div`
   position: relative;
   margin-top : 35px;
@@ -262,11 +266,6 @@ function DetailPresenter  ({ result, loading, error }) {
                   })} {Math.floor((result.vote_average/2)* 10) /10}/5
                 </Item>
                 <h3>
-                  <Item>
-                      {result.production_countries && result.production_countries.map((country) =>
-                        `[${country.name}]`
-                          )}
-                  </Item>
                 </h3>
                         
             </ItemContainer>
@@ -274,7 +273,16 @@ function DetailPresenter  ({ result, loading, error }) {
                 <Overview>{result.overview}</Overview>
             </Tab>
                 <Tab eventKey="profile" title="제작사/출연진">
+                  
+                  
             <LogoContainer>
+                  <Country>
+                      제작 국가
+                      <br /><br />
+                      {result.production_countries && result.production_countries.map((country, index) =>
+                        result.production_countries.length !== index +1  ? `${ country.name}, ` : country.name
+                          )}
+                  </Country>
               <Section title="제작사">
                 {result.production_companies.map(logopath => logopath.logo_path ? 
                   <Logo bgImage = {`https://image.tmdb.org/t/p/original${logopath.logo_path}`} /> : console.log(logopath.logo_path)) }
@@ -300,7 +308,7 @@ function DetailPresenter  ({ result, loading, error }) {
                 ?
                 <Tab eventKey="Series" title="시리즈">
                   <SeriesContainer>
-                    <Section>
+                    <Section title="시리즈">
                       {result.seasons.map(season => season.name ? 
                       <Portrait imageUrl = {season.poster_path} name = {season.name} character_name = {season.air_date && season.air_date.substring(0,4)}  /> : console.log(season.profile_path)) }
                     </Section>

@@ -7,6 +7,16 @@ import { TiMediaPlayOutline, TiMediaPauseOutline } from "react-icons/ti";
 import "./style.css";
 import styled from 'styled-components';
 
+const SLink = styled(Link)`
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    &:hover{
+        text-decoration: none;
+        color: green;
+        opacity: 0.9;
+    }
+  `;
 const Button = styled.button`
   margin: 1.3rem;
   border-style: none;
@@ -21,8 +31,6 @@ const Button = styled.button`
 const BackgroundYT = (props) =>{
 
     const random = Math.floor(Math.random() * 20);
-
-    const [Loading, setLoading] = useState(true)
 
     const [Data, setData] = useState("")
 
@@ -55,7 +63,10 @@ const BackgroundYT = (props) =>{
         width: '100%',
         playerVars: {
           autoplay: 1,
-          mute:1
+          mute:1,
+          loop:1,
+          playlist: Data?.videos?.results[0]?.key
+          
         },
       };
 
@@ -75,7 +86,6 @@ const BackgroundYT = (props) =>{
         } catch (e) {
             console.log(e)
         } finally {
-          setLoading(false)
         }
     }
 
@@ -97,9 +107,9 @@ const BackgroundYT = (props) =>{
                                 <h1>{Data && Data.title ? Data.title : Data.name }</h1>
                                     <p>{Data && Data.overview}</p>
                                     {Data.original_title ?
-                                         <Link to={`/movie/${Data.id}`}> 상세 정보</Link>
+                                         <SLink to={`/movie/${Data.id}`}> 상세 정보</SLink>
                                         :
-                                        <Link to={`/show/${Data.id}`}> 상세 정보</Link>
+                                        <SLink to={`/show/${Data.id}`}> 상세 정보</SLink>
                                     }
                             </div>
                             <div class="vid-control">
