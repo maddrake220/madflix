@@ -1,4 +1,4 @@
-# Madflix : 영화 웹앱 클론코딩을 통해 리액트, ES6, Css (styled-Component) 학습 & 개발
+# Madflix : Netflix 클론코딩을 통해 리액트, ES6, Css (styled-Component) 학습 & 개발
 
 site URL: https://madflix.netlify.app/#/ 
 
