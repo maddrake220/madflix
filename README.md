@@ -13,33 +13,34 @@
 1. YT API를 이용해 Autostart, Pause, Mute 기능 구현
 2. Styled-components 를 이용해 sticky background와 Poster구현
 
-![alt text](/images/madflix.jpg "Title")
+![madflix](https://user-images.githubusercontent.com/83238246/122630612-050ee700-d100-11eb-8022-54881c1f33cc.jpg)
+
 
 - Movie 화면
 
 1. MovieDB API를 axios를 사용해 Movie의 각 섹션별로 fetching
 2. Poster hovering시 Animation 구현
 
-![alt text](/images/madflix_movies.jpg "Title")
+![madflix_movies](https://user-images.githubusercontent.com/83238246/122630614-05a77d80-d100-11eb-9fe2-48e99b52a8f8.jpg)
 
 - TV 화면
 
 1. MovieDB API를 axios를 사용해 TV Show의 각 섹션별로 fetching
 2. Poster hovering시 Animation 구현
 
-![alt text](/images/madflix_tvs.jpg "Title")
+![madflix_tvs](https://user-images.githubusercontent.com/83238246/122630611-03452380-d100-11eb-945c-fcbc7452d993.jpg)
 
 - Detail 화면
 
 1. 별점 기능 구현
 2. Tab 기능 구현 : Tab별로 각각 정보, 제작사, 클립, 시리즈 기능 구현
-   ![alt text](/images/madflix_detail.jpg "Title")
+![madflix_detail](https://user-images.githubusercontent.com/83238246/122630613-050ee700-d100-11eb-8c3f-f148b02ce97c.jpg)
 
 - Search 화면
 
 1. 검색 기능 구현
 
-![alt text](/images/madflix_search.jpg "Title")
+![madflix_search](https://user-images.githubusercontent.com/83238246/122630615-05a77d80-d100-11eb-9d60-1f24e2022905.jpg)
 
 ### 사용 스킬
 
