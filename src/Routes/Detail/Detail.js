@@ -163,7 +163,7 @@ const Overview = styled.p`
   width: 60%;
 `;
 
-function DetailPresenter({ result, loading, error }) {
+const Detail = ({ result, loading, error }) => {
   const opts = {
     height: "390",
     width: "640",
@@ -416,12 +416,6 @@ function DetailPresenter({ result, loading, error }) {
       </Similar_stuff>
     </Container>
   );
-}
-
-DetailPresenter.propTypes = {
-  result: propTypes.object,
-  error: propTypes.string,
-  loading: propTypes.bool.isRequired,
 };
 
-export default DetailPresenter;
+export default Detail;
