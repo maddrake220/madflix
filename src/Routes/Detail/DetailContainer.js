@@ -1,50 +1,42 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { moviesApi, tvApi } from "../../API";
+import { useParams } from "react-router";
 import DetailPresenter from "./DetailPresenter";
 
-export default class extends React.Component {
-    constructor(props) {
-        super(props)
-        const {location: { pathname }} = props
-        this.state = {
-            result: null,
-            error: null,
-            loading: true,
-            isMovie : pathname.includes("/movie/")
-        }
-    }
-    async componentDidMount() {
-        const {
-          match: {
-            params: { id }
-          },
-          history: { push }
-        } = this.props;
-        const { isMovie} = this.state
-        const parsedId = parseInt(id);
-        if (isNaN(parsedId)) {
-          return push("/");
-        }
-        let result = null;
-        try {
-            if(isMovie) {
-                ({data: result} = await moviesApi.movieDetail(parsedId))
-            } else {
-                ({data: result} = await tvApi.showDetail(parsedId))
-            }
-        } catch {
-            this.setState({ error: "Can't find anything"})
-        } finally {
-            this.setState({loading: false, result})
-        }
+const Detail = ({ match, location }) => {
+  const params = useParams();
+  const { pathname } = location;
+
+  const [result, setResult] = useState(null);
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [isMovie, setIsMovie] = useState(true);
+
+  const getDetailDataFromApi = async () => {
+    const parsedId = parseInt(params.id);
+    /* if (isNaN(parsedId)) {
+      return push("/");
+    } */
+    let result = null;
+    setIsMovie(pathname.includes("/movie/"));
+    try {
+      if (isMovie) {
+        ({ data: result } = await moviesApi.movieDetail(parsedId));
+      } else {
+        ({ data: result } = await tvApi.showDetail(parsedId));
       }
-    render() {
-        const {result, error, loading} = this.state;
-        return (
-            <DetailPresenter 
-            result={result} 
-            error={error}
-            loading={loading}
-            />);
+      setResult(result);
+    } catch {
+      setError("데이터를 찾을 수 없습니다.");
+    } finally {
+      setLoading(false);
     }
-}
+  };
+
+  useEffect(() => {
+    getDetailDataFromApi();
+  }, []);
+  return <DetailPresenter result={result} error={error} loading={loading} />;
+};
+
+export default Detail;
